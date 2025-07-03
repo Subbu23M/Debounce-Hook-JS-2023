@@ -3,7 +3,7 @@ import { useAxios } from "../hooks/useAxios"
 import { useDebounce } from "../hooks/useDebounce"
 
 export const SearchFilter = () => {
-    const [data] = useAxios('https://restcountries.com/v3.1/all')
+    const [data] = useAxios('https://jsonplaceholder.typicode.com/users')
 
     const [searchValue, setSearchValue] = useState('')
 
@@ -17,7 +17,7 @@ export const SearchFilter = () => {
     }
 
     const filterData = data.filter((ele) => {
-        const result = ele.name.common.toLowerCase().includes(debouncedValue)
+        const result = ele.name.toLowerCase().includes(debouncedValue)
         return result
     })
         
@@ -45,7 +45,7 @@ export const SearchFilter = () => {
                                 Name
                             </th>
                             <th>
-                                Area
+                                City
                             </th>
                             <th>
                                 Population
@@ -57,19 +57,20 @@ export const SearchFilter = () => {
                             filterData?.map((country,i) => {
                                 const {
                                     name,
-                                    area,
-                                    population
+                                    address,
+                                    website
                                 } = country
+                                const { city } = address || {};
                                 return (
                                     <tr key={i}>
                                         <td>
-                                            {name.common}
+                                            {name}
                                         </td>
                                         <td>
-                                            {area}
+                                            {city}
                                         </td>
                                         <td>
-                                            {population}
+                                            {website}
                                         </td>
                                     </tr>
                                 )
